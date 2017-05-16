@@ -1,7 +1,9 @@
 package com.example.maow6390.myapplication;
 
+import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -17,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String col_3 = "AGE";
     public static final String col_4 = "ADDRESS";
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 2);
     }
 
     @Override
@@ -45,5 +47,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else {
             return true;
         }
+    }
+    public Cursor getAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_NAME, null);
+        return res;
     }
 }

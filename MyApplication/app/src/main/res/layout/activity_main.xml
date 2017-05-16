@@ -73,4 +73,13 @@
         android:layout_alignEnd="@+id/editText_Age"
         android:layout_toEndOf="@+id/button_add" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Data"
+        android:id="@+id/button_view"
+        android:layout_alignTop="@+id/button_add"
+        android:layout_alignEnd="@+id/editText_address"
+        android:onClick="viewData" />
+
 </RelativeLayout>

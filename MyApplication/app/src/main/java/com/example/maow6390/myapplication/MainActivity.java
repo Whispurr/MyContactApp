@@ -1,5 +1,6 @@
 package com.example.maow6390.myapplication;
 
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,5 +45,29 @@ DatabaseHelper myDb;
         //insert toast message here...
     }
 
+    }
+    public void showMessage (String error, String s) {
+        //AlertDialog.Builder
+    }
+    public void viewData(View vi) {
+        Cursor res = myDb.getAllData();
+        if (res.getCount()==0) {
+            showMessage("Error","No data found in database");
+            Toast toast = Toast.makeText(getApplicationContext(), "No Data found in database",Toast.LENGTH_SHORT);
+            toast.show();
+            Log.d("MyContact", "No data found in database");
+            //output message using Log.d and toast
+            return;
+        }
+        StringBuffer buffer = new StringBuffer();
+        //setup a look with cursor (res0 using moveto next
+        //append each col to the buffer
+        //display message using show message
+        for (int i=0; i<res.getCount();i++ ) {
+            for (int j=0; j<=3; j++) {
+
+            }
+        }
+        showMessage("Data",buffer.toString());
     }
 }
