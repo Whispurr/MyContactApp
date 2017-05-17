@@ -82,4 +82,20 @@
         android:layout_alignEnd="@+id/editText_address"
         android:onClick="viewData" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/button_search"
+        android:layout_above="@+id/button_add"
+        android:onClick="searchData" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText_search"
+        android:layout_alignBottom="@+id/button_search"
+        android:layout_alignEnd="@+id/button_view"
+        android:layout_alignStart="@+id/editText_address" />
+
 </RelativeLayout>

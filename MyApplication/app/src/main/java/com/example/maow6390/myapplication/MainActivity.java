@@ -1,6 +1,7 @@
 package com.example.maow6390.myapplication;
 
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +16,16 @@ DatabaseHelper myDb;
     EditText editAge;
     EditText editAddress;
     Button btnAddData;
+    String[] fields;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        fields = new String[4];
+        fields[0] = "ID :";
+        fields[1] = "NAME :";
+        fields[2] = "AGE :";
+        fields[3] = "ADDRESS :";
         myDb = new DatabaseHelper(this);
         //add the layout bars
         editName = (EditText) findViewById(R.id.editText_Name);
@@ -46,7 +52,12 @@ DatabaseHelper myDb;
     }
 
     }
-    public void showMessage (String error, String s) {
+    public void showMessage (String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
         //AlertDialog.Builder
     }
     public void viewData(View vi) {
@@ -63,10 +74,15 @@ DatabaseHelper myDb;
         //setup a look with cursor (res0 using moveto next
         //append each col to the buffer
         //display message using show message
+        res.moveToFirst();
         for (int i=0; i<res.getCount();i++ ) {
             for (int j=0; j<=3; j++) {
+                buffer.append(fields[j]);
+                buffer.append(res.getString(j));
+                buffer.append("\n");
 
             }
+            res.moveToNext();
         }
         showMessage("Data",buffer.toString());
     }
