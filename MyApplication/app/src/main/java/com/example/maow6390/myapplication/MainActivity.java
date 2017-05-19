@@ -15,22 +15,24 @@ DatabaseHelper myDb;
     EditText editName;
     EditText editAge;
     EditText editAddress;
+    EditText editSearch;
     Button btnAddData;
-    String[] fields;
+    String[] strings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fields = new String[4];
-        fields[0] = "ID :";
-        fields[1] = "NAME :";
-        fields[2] = "AGE :";
-        fields[3] = "ADDRESS :";
+        strings = new String[4];
+        strings[0] = "ID :";
+        strings[1] = "NAME :";
+        strings[2] = "AGE :";
+        strings[3] = "ADDRESS :";
         myDb = new DatabaseHelper(this);
         //add the layout bars
         editName = (EditText) findViewById(R.id.editText_Name);
         editAge = (EditText) findViewById(R.id.editText_Age);
         editAddress = (EditText) findViewById(R.id.editText_address);
+        editSearch = (EditText) findViewById(R.id.editText_search);
     }
     public void addData(View v) {
         boolean isInserted = (myDb.insertData(editName.getText().toString(),editAge.getText().toString(),editAddress.getText().toString()));
@@ -41,6 +43,7 @@ DatabaseHelper myDb;
             text = "data inserted";
             Toast toast = Toast.makeText(getApplicationContext(), text,Toast.LENGTH_SHORT);
             toast.show();
+            editSearch.setText("");
             //insert toast message here...
         }
         else {
@@ -49,6 +52,7 @@ DatabaseHelper myDb;
             toast.show();
                 Log.d("MyContact", "SFailer inserting data");
         //insert toast message here...
+
     }
 
     }
@@ -60,6 +64,27 @@ DatabaseHelper myDb;
         builder.show();
         //AlertDialog.Builder
     }
+    public void searchData(View v) {
+        StringBuffer buffer = new StringBuffer();
+        String search = editSearch.getText().toString();
+        Cursor res = myDb.getAllData();
+        res.moveToFirst();
+        for (int i = 0; i < res.getCount(); i++) {
+            if (res.getString(1).equals(search)) {
+                for (int j = 0; j < 4; j++) {
+                    buffer.append(strings[j]+res.getString(j)+"\n");
+                }
+            }
+            res.moveToNext();
+        }
+        if (buffer.toString().equals("")) {
+            showMessage("No results found", "");
+        } else {
+            showMessage("Results :", buffer.toString());
+        }
+        editSearch.setText("");
+    }
+
     public void viewData(View vi) {
         Cursor res = myDb.getAllData();
         if (res.getCount()==0) {
@@ -76,11 +101,8 @@ DatabaseHelper myDb;
         //display message using show message
         res.moveToFirst();
         for (int i=0; i<res.getCount();i++ ) {
-            for (int j=0; j<=3; j++) {
-                buffer.append(fields[j]);
-                buffer.append(res.getString(j));
-                buffer.append("\n");
-
+            for (int j=0; j<4; j++) {
+                buffer.append(strings[j] + res.getString(j) + "\n");
             }
             res.moveToNext();
         }
